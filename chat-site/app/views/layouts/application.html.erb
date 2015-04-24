@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Чат для геймеров - <%= request.host %> </title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+    <div class="header">
+      <div class="logo-wrap go-left"><a href="/"><img src="/assets/head/logo.png" alt=""/></a></div>
+      <div class=" go-right">
+          <% if current_user %>
+            <%= render 'layouts/user_data' %>
+          <% else %>
+            <%= render 'layouts/login_form' %>
+          <% end %>
+      </div>
+    </div>
+
+	<%= yield %>
+
+</body>
+</html>

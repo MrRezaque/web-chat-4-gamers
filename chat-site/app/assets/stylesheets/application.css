@@ -1,0 +1,206 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+
+
+
+ */
+
+body {
+    /*background-color: #1a1a1a;*/
+    background-color: #1a1a1a;
+}
+
+/* == HEADER STYLES == */
+
+.header {
+    height: 50px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.header img {
+    height: 50px;
+    width: auto;
+}
+
+
+.header-controls {
+    width: 600px;
+    float: right;
+    margin-right: 30px;
+}
+
+
+.username-wrap {
+    margin-left: 50px;
+    width: 200px;
+    vertical-align: baseline;
+    font-size: 19px;
+    line-height: 35px;
+    display: block;
+    float:left;
+}
+
+/* == HEADER STYLES ENDS */
+
+
+
+/* == PAGE STYLES ==*/
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+}
+
+.form-wrap {
+    margin: 40px auto;
+    width: 400px;
+}
+
+/* == PAGE STYLES ENDS ==*/
+
+
+
+
+
+
+
+/* == COMMON RULES == */
+
+.go-left {
+    float: left;
+}
+
+.go-right {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.hoverable {
+    display: inline-block;
+}
+
+.hoverable .hover {
+    display: none;
+}
+.hoverable:hover .hover {
+    display: inline-block;
+}
+
+.hoverable:hover .hover-none {
+    display: none;
+}
+
+.relative-wrap {
+
+    position: relative;
+    margin-top: 55px;
+}
+.center-offset{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+
+
+/* == COMMON STYLES ENDS == */
+
+
+/* == REGISTRATION && AUTH STYLES == */
+
+.reg-block {
+    width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    /*margin-top: -50px;*/
+    background-color: #ffffff;
+}
+
+.reg-block label {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 18px;
+    width: 100%;
+}
+
+.reg-block input[type="text"], .reg-block input[type="email"], .reg-block input[type="password"] {
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 490px;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    height: 25px;
+    text-align: center;
+}
+
+.reg-block a, .reg-block a:hover  {
+    color: red;
+    display: inline-block;
+    margin: 3px;
+}
+.reg-block input[type="image"], input[type="submit"]  {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+/* == REGISTRATION && AUTH STYLES ENDS == */
+
+/* == DEVISE ALERTS */
+
+/*flash*/
+
+.error-wrapper {
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 25px;
+    margin-top: 0px;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+
+}
+
+.alert-alert {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+    text-align: left;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+}
+
+.alert-notice {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #468847;
+    text-align: left;
+}
+
+/* == DEVISE ALERTS ENDS */

@@ -1,0 +1,6 @@
+<span class="username-wrap"><%= current_user.username %></span>
+<%= link_to 'Редактировать учетные данные', edit_user_registration_path, class: '-btn -primary-' %>
+<%= link_to 'Выйти', destroy_user_session_path, :method => :delete , class: '-btn -danger-' %>
+
+
+

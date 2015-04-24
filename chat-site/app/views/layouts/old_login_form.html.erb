@@ -1,0 +1,14 @@
+<%= form_for(:user,  url: session_path(:user)) do |f| %>
+    <span class="field ">
+      <%= f.email_field :email, autofocus: true, class: 'vasya', placeholder: 'e-mail' %>
+    </span>
+
+    <span class="field ">
+        <%= f.password_field :password, autocomplete: "off", placeholder: 'пароль' %>
+    </span>
+
+    <%= f.submit "Войти" , class: '-btn' %>
+    <%= link_to 'Регистрация', new_user_registration_path, class: '-btn  -primary-' %>
+<% end %>
+
+

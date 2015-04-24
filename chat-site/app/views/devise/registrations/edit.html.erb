@@ -1,0 +1,50 @@
+
+<div class="relative-wrap"><div class="center-offset">
+  <div class="reg-block">
+    <div><img src="/assets/login/logo.png" alt=""/></div>
+    <h2>Редактировать мои данные</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= render "devise/errors/errors" %>
+
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label 'Логин' %>
+        <%= f.text_field :username %>
+      </div>
+
+      <div class="field">
+        <%= f.label 'Пароль' %> (оставить пустым, если не планируете изменить его)<br />
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label 'Подверждение пароля' %>
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label "Текущий пароль" %> <i>(Введите текущий пароль для подтверждения изменений)</i><br />
+        <%= f.password_field :current_password, autocomplete: "off" %>
+      </div><br/>
+
+      <div class="actions">
+        <%= link_to "Назад", :back , class: '-btn' %>
+        <%= f.submit "Обновить",  class: '-btn'  %>
+      </div>
+
+
+    <% end %>
+
+
+
+
+  </div></div></div>

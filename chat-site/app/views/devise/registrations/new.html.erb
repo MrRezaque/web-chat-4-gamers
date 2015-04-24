@@ -1,0 +1,37 @@
+
+<div class="relative-wrap"><div class="center-offset">
+  <div class="reg-block">
+    <div><img src="/assets/login/logo.png" alt=""/></div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/errors/errors" %>
+        <div class="field">
+        <%= f.label 'e-mail' %>
+        <%= f.text_field :email, autofocus: true %>
+        </div>
+      <div class="field">
+        <%= f.label 'Логин' %>
+        <%= f.text_field :username %>
+      </div>
+
+      <div class="field">
+        <%= f.label 'Пароль' do %>
+            Пароль
+            <% if @validatable %>
+                (Минимум <%= @minimum_password_length %> символов)
+            <% end %>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label 'Подтверждение пароля'  %>
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+      <div class="">
+        <%= image_submit_tag 'login/join-btn.png', class: '' %>
+      </div>
+    <% end %>
+
+  </div></div></div>

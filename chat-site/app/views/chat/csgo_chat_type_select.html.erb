@@ -1,0 +1,29 @@
+<div class="room-select-menu-wrap">
+  <div class="room-select-menu">
+
+    <div class="room-select">
+        <div class="room-palceholder"></div>
+      <div class="room-thumb">
+        <%= link_to  csgo_chat_path('search'), class: 'hoverable' do %>
+            <img class="hover-none" src="/assets/room_select/search.png" alt=""/>
+            <img class="hover" src="/assets/room_select/search-hover.png" alt=""/>
+        <% end %>
+      </div>
+
+      <div class="room-thumb">
+        <%= link_to  csgo_chat_path('trade'), class: 'hoverable' do %>
+            <img class="hover-none" src="/assets/room_select/market.png" alt=""/>
+            <img class="hover" src="/assets/room_select/market-hover.png" alt=""/>
+        <% end %>
+      </div>
+
+      <div class="room-thumb">
+        <%= link_to  csgo_chat_path('talk'), class: 'hoverable' do %>
+            <img class="hover-none" src="/assets/room_select/flood.png" alt=""/>
+            <img class="hover" src="/assets/room_select/flood-hover.png" alt=""/>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

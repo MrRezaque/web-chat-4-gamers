@@ -1,0 +1,105 @@
+// Place all the styles related to the chat controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* == MENU STYLES == */
+
+.game-select-menu-wrap {
+  position: relative;
+  margin-top: 75px;
+}
+
+.game-select-menu {
+  position: absolute;
+  top: 50%;
+
+  width: 100%;
+
+}
+
+.game-select {
+
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  height: 500px;
+  width: 1100px;
+  background: #ffffff url("/assets/game_select/form.png");
+  background-size: 1100px 500px;
+}
+
+.thumb-wrapper {
+
+}
+
+.menu-placeholder {
+  height: 70px;
+}
+
+.menu-thumb {
+  width: 400px;
+  float: left;
+  height: 200px;
+  text-align: center;
+  margin: 75px;
+
+}
+
+.menu-thumb a {
+  display: inline-block;
+  height: inherit;
+  width: 100%;
+}
+
+.menu-thumb a:after {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.menu-thumb img {
+  max-height: 120px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+
+/* == MENU STYLES ENDS == */
+
+.room-select-menu-wrap {
+  position: relative;
+  margin-top: 75px;
+}
+
+.room-select-menu {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.room-select {
+  margin-left: auto;
+  margin-right: auto;
+  width: 990px;
+  height: 500px;
+  overflow: hidden;
+  background: url('room_select/form.png');
+  background-size: 980px 500px;
+  background-color: #080808;
+}
+
+.room-thumb {
+  float: left;
+  overflow: hidden;
+}
+
+.room-thumb img {
+  width: 330px;
+  height: 330px;
+}
+
+.room-palceholder {
+  height: 100px;
+}

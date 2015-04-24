@@ -1,0 +1,14 @@
+{
+  "name": "socket.io-chat",
+  "version": "0.0.0",
+  "description": "A simple chat client using socket.io",
+  "main": "index.js",
+  "author": "Yar",
+  "private": true,
+  "dependencies": {
+    "express": "3.4.8",
+    "sql": "0.50.0",
+    "pg": "~4.3.0",
+    "lodash": "~3.7.0"
+  }
+}

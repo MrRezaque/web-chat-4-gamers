@@ -1,0 +1,15 @@
+
+<div class="pages">
+    <div class="chatArea">
+        <ul class="messages"></ul>
+    </div>
+    <input class="inputMessage" placeholder="Введите сообщение..."/>
+    <% if current_user %>
+        <script>
+            currentUser = '<%= current_user.username %>';
+            console.log(currentUser);
+            init( '<%= endpoint %>' ,'<%= current_user.auth_token %>')
+        </script>
+    <% end %>
+</div>
+
