@@ -11,6 +11,8 @@ html {
 
 html, input {
   font-family:
+    "basic_comical_r",
+    "Comic Sans MS",
     "HelveticaNeue-Light",
     "Helvetica Neue Light",
     "Helvetica Neue",
@@ -99,10 +101,6 @@ ul {
 
 /* Font */
 
-.messages {
-  font-size: 100%;
-}
-
 .inputMessage {
   font-size: 100%;
 }
@@ -123,10 +121,11 @@ ul {
 }
 
 .messages {
+  font-size: 100%;
   height: 100%;
   margin: 0;
   overflow-y: scroll;
-  padding: 50px 20px 10px 20px;
+  padding: 65px 20px 10px 20px;
 }
 
 .message.typing .messageBody {
@@ -186,7 +185,7 @@ ul {
 .room-msg-wrap {
     position: absolute;
     top: 0;
-    height: 50px;
+    height: 65px;
     overflow: hidden;
     width: 100%;
 
@@ -197,7 +196,7 @@ ul {
 .room-msg {
     position: absolute;
     top: 0;
-    height: 50px;
+    height: 65px;
     width: 100%;
     overflow: hidden;
 

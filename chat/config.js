@@ -1,6 +1,6 @@
 module.exports.greetings = {
   trade:  'Добро пожаловать в trade чат CS:GO',
-  search: 'Добро пожаловать в  чат CS:GO',
+  search: 'Добро пожаловать в  чат CS:GO. Слова, слова, буквы буквы хуюквы, азазаз, зазазаз, зазаза.',
   talk:    'Добро пожаловать в  чат CS:GO'
 };
 module.exports.ban = {

@@ -114,21 +114,8 @@
         $typingMessages.remove();
       }
       var message = data.message || '';
-      var pattern ="^" + username + ",";
-      var regExp = new RegExp(pattern);
 
-      //console.log(regExp);
-      //console.log(message);
-      //console.log(pattern);
-      console.log('regexp:');
-      console.log(regExp);
-      console.log('message:');
-      console.log(message);
-      console.log('username: ');
-      console.log(data.username);
-
-
-      if ( regExp.test( message ) ) {
+      if ( $$chat.beginsWithUsername( username, message ) ) {
         var msgStart = message.split(',')[0].length
         message ='<span class="message-highlight">'+username+'</span>,' + message.slice(msgStart+1);
       }
@@ -424,11 +411,21 @@
     $$chat.addressMessage = function(username) {
       $inputMessage.focus();
       var curInpVal = $inputMessage.val() || '';
+      if ($$chat.beginsWithUsername(username, curInpVal)) {
+        return;
+      }
       var newValue = username + ", " + curInpVal;
       $inputMessage.val(newValue);
     };
     $$chat.claimUser = function(username) {
       socket.emit('complaint', username);
+    }
+    $$chat.beginsWithUsername = function(username, message) {
+
+      var pattern ="^" + username + ",";
+      var regExp = new RegExp(pattern);
+
+      return regExp.test(message)
     }
   }
 
