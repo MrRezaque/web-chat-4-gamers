@@ -1,8 +1,12 @@
-<%= link_to  '#', class: 'hoverable' do %>
-    <img src="/assets/head/call.png" alt="" class="hover-none" />
-    <img src="/assets/head/call-hover.png" alt="" class="hover" />
-<% end %>
-<%= link_to  new_user_session_path, class: 'hoverable' do %>
-    <img src="/assets/head/log.png" alt="" class="hover-none" />
-    <img src="/assets/head/log-hover.png" alt="" class="hover" />
-<% end %>
+<div class="header-buttons-wrap">
+  <%= link_to  'http://vk.com/write5632934', title: 'Обратная связь', class: 'hoverable header-buttons' do %>
+      <%= image_tag 'head/call.png', class: 'hover-none' %>
+      <%= image_tag 'head/call-hover.png', class: 'hover' %>
+  <% end %>
+</div>
+<div class="header-buttons-wrap">
+    <%= link_to  new_user_session_path, title: 'Вход', class: 'hoverable header-buttons' do %>
+        <%= image_tag 'head/log.png', class: 'hover-none' %>
+        <%= image_tag 'head/log-hover.png', class: 'hover' %>
+    <% end %>
+</div>

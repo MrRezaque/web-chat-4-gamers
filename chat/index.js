@@ -6,10 +6,11 @@ var socketio = require('./socket.io-master')(server);
 var db = require('./database.js');
 var port = process.env.PORT || 3001;
 var _ = require('lodash');
-
-var MAX_COMPLAINT_CNT = 1;
-var BAN_TIME = 1000*60*5;
 var config = require('./config.js');
+
+var MAX_COMPLAINT_CNT = process.env.MAX_COMPLAINT_CNT || config.ban['max_complaint_cnt'] ||  10;
+var BAN_TIME = process.env.BAN_TIME || config.ban['time'] ||   1000*60*5;
+
 
 console.log(config);
 
@@ -40,9 +41,13 @@ function bindNamespace(roomName) {
     var addedUser = false;
     var path = nameSpacePath;
 
+    ++numUsers;
+
     // socket.banned = false;
-
-
+    socket.emit('set room data', {
+      numUsers: numUsers,
+      roomMsg:  config.greetings[roomName]
+    });
 
     // when the client emits 'new message', this listens and executes
     socket.on('new message', function (data) {
@@ -53,8 +58,8 @@ function bindNamespace(roomName) {
       console.log('username: ');
       console.log(socket.username);
       
-      console.log('time now:' + Date.now());
-      console.log('bunned until: ' + socket.bannedUntil);
+      console.log('time now:' + formatDate(new Date()));
+      console.log('bunned until: ' + formatDate(socket.bannedUntil));
 
       if (!addedUser) {
       	return;
@@ -71,9 +76,10 @@ function bindNamespace(roomName) {
       	});
       }
       else {
+        console.log('banned until:' + (socket.bannedUntil - Date.now()) / 1000);
       	socket.emit('notification', {
       		type: "BAN_INFO",
-      		seconds: (socket.bannedUntil - Date.now()) / 1000
+      		seconds: (socket.bannedUntil - Date.now()) / 1000 >> 0
       	});
       }
       
@@ -86,18 +92,20 @@ function bindNamespace(roomName) {
 		  db.getUsername(token, authResultHandler);
     });
 
-    function authResultHandler(username, bannedUntil) {
-    	if (username != null ) {
-        successAuth(username, bannedUntil);
+    function authResultHandler(data) {
+
+    	if (data != null ) {
+        successAuth(data);
       }
       else {
         failAuth();
       }
     }
 
-
     function successAuth(data) {
 
+      console.log('Current users are: ');
+      console.log(users);
       console.log('Succeessful Auth! Username is:' + data.username);
 
       //save id
@@ -106,23 +114,29 @@ function bindNamespace(roomName) {
       socket.username = data.username;
       //add banned until mark
       socket.bannedUntil = data.bannedUntil;
+
       if (!socket.bannedUntil) {
       	socket.bannedUntil = Date.now() - 1;
       }
 
       socket.complainers = [];
 
+      var oldSocket = users[data.username];
+      if (oldSocket) {
+        oldSocket.disconnect();
+      }
+
       // add the client's username to the global list
       users[data.username] = socket;
-      ++numUsers;
+
       addedUser = true;
 
       //say hello to new user
 
-      socket.emit('notification', {
-        type: 'NOTIFY',
-        message: config.greetings[roomName]
-      });
+      //socket.emit('notification', {
+      //  type: 'NOTIFY',
+      //  message: config.greetings[roomName]
+      //});
 
       socket.emit('login', {
         numUsers: numUsers,
@@ -131,10 +145,10 @@ function bindNamespace(roomName) {
 
 
       // echo globally (all clients) that a person has connected
-      // socket.broadcast.emit('user joined', {
-      //   username: socket.username,
-      //   numUsers: numUsers
-      // });	
+      socket.broadcast.emit('user joined', {
+         username: socket.username,
+         numUsers: numUsers
+      });
     }
 
     function failAuth() {
@@ -155,7 +169,14 @@ function bindNamespace(roomName) {
 
         abusersSocket.complainers.push(socket.username);
         abusersSocket.complainers = _.unique(abusersSocket.complainers);
+        console.log('complaint cnt:' + abusersSocket.complainers.length);
+        console.log('max complaint: ' + MAX_COMPLAINT_CNT);
         if (abusersSocket.complainers.length >= MAX_COMPLAINT_CNT) {
+          console.log('enought votes for ban');
+          abusersSocket.emit('notification', {
+            type: 'NOTIFY',
+            message: config.ban['msg']
+          });
           banUser(abusersSocket, BAN_TIME);
           abusersSocket.complainers = [];
         }
@@ -163,8 +184,8 @@ function bindNamespace(roomName) {
     });
 
     function banUser(socket, time) {
-      socket.bannedUntil = Date.now + time;
-      db.banUser(socket)
+      socket.bannedUntil = Date.now() + time;
+      db.banUser(socket.databaseId, Date.now() + time)
     }
 
     // when the client emits 'typing', we broadcast it to others
@@ -183,19 +204,24 @@ function bindNamespace(roomName) {
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function () {
+
       console.log('user disconnected');
+      --numUsers;
+      socket.broadcast.emit('user left', {
+        username: socket.username,
+        numUsers: numUsers
+      });
       // remove the username from global users list
       if (addedUser) {
         delete users[socket.username];
-        --numUsers;
-
         // echo globally that this client has left
-        socket.broadcast.emit('user left', {
-          username: socket.username,
-          numUsers: numUsers
-        });
         addedUser = false;
       }
     });
   });
+}
+
+function formatDate(date) {
+  date = new Date(date);
+  return [ date.getHours(), date.getMinutes(), date.getSeconds() ].join(':');
 }

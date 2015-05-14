@@ -2,14 +2,15 @@
 <html>
 <head>
   <title>Чат для геймеров - <%= request.host %> </title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
     <div class="header">
-      <div class="logo-wrap go-left"><a href="/"><img src="/assets/head/logo.png" alt=""/></a></div>
-      <div class=" go-right">
+      <div class="logo-wrap go-left"><a href="/"><%= image_tag 'head/logo.png' %></a></div>
+
+      <div class="go-right">
           <% if current_user %>
             <%= render 'layouts/user_data' %>
           <% else %>
@@ -18,7 +19,10 @@
       </div>
     </div>
 
+
 	<%= yield %>
+
+
 
 </body>
 </html>

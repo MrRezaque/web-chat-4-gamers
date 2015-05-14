@@ -58,6 +58,9 @@ function getUsername(token, resultHandler) {
 				console.log('username is:' + username);
 				console.log('banned until: '+ bannedUntil);
 			}
+			else {
+				resultHandler(null);
+			}
 		});
 	});
 }
@@ -75,7 +78,9 @@ function getUsername(token, resultHandler) {
 
 function banUser (userId, banUntil) {
 
-	var updateQuery = user.update({chat_banned_until: banUntil})
+	var date = new Date(banUntil)
+
+	var updateQuery = user.update({chat_banned_until: date})
 									.where(user.id.equal(userId)).toQuery();
 
 	pg.connect(connString, function(err, client, done) {
@@ -87,9 +92,10 @@ function banUser (userId, banUntil) {
 		}
 
 		client.query(updateQuery.text, updateQuery.values, function(err, result) {
-			//release a client back to the pool
 			done();
-
+			//release a client back to the pool
+			console.log(err);
+			console.log(result);
 		});
 
 	});

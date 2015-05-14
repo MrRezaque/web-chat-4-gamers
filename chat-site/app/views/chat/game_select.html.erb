@@ -1,3 +1,6 @@
+<% unless current_user %>
+    <%= render "chat/session_alert" %>
+<% end %>
 <div class="game-select-menu-wrap">
     <div class="game-select-menu">
         <div class="game-select">
@@ -5,14 +8,14 @@
             <div class="thumb-wrapper">
                 <div class="-thumbnail  menu-thumb">
                     <%=link_to  csgo_chat_path, class: 'hoverable' do %>
-                      <img class="hover-none" src="assets/game_select/csgo_logo.png" alt=""/>
-                      <img class="hover" src="assets/game_select/csgo_logo_hover.png" alt=""/>
+                      <%= image_tag 'game_select/csgo_logo.png', class: 'hover-none' %>
+                      <%= image_tag 'game_select/csgo_logo_hover.png', class: 'hover' %>
                     <% end %>
                 </div>
                 <div class="-thumbnail menu-thumb">
                     <%= link_to  dota2_chat_path, class: 'hoverable' do %>
-                      <img class="hover-none" src="assets/game_select/dota_logo.png" alt=""/>
-                      <img class="hover" src="assets/game_select/dota_logo_hover.png" alt=""/>
+                      <%= image_tag 'game_select/dota_logo.png', class: 'hover-none' %>
+                      <%= image_tag 'game_select/dota_logo_hover.png', class: 'hover' %>
                     <% end %>
                 </div>
             </div>

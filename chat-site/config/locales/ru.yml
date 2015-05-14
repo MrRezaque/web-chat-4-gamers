@@ -88,6 +88,7 @@ ru:
         password: "Пароль"
         password_confirmation: "Подтверждение пароля"
         username: "Логин"
+        current_password: "Текущий пароль"
     # Перевод названий атрибутов моделей. Используется в Model.human_attribute_name(attribute).
     #attributes:
       # Например,

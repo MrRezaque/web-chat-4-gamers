@@ -20,14 +20,46 @@
 body {
     /*background-color: #1a1a1a;*/
     background-color: #1a1a1a;
+    background-image:  url("/assets/bg.jpg");
+    background-size: 150px 150px;
 }
-
+/* font-family: "KelsonSansRegular"; */
+@font-face {
+    font-family: "KelsonSansRegular";
+    src: url("../fonts/KelsonSansRegular/KelsonSansRegular.eot");
+    src: url("../fonts/KelsonSansRegular/KelsonSansRegular.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/KelsonSansRegular/KelsonSansRegular.woff") format("woff"),
+    url("../fonts/KelsonSansRegular/KelsonSansRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "KelsonSansLight"; */
+@font-face {
+    font-family: "KelsonSansLight";
+    src: url("../fonts/KelsonSansLight/KelsonSansLight.eot");
+    src: url("../fonts/KelsonSansLight/KelsonSansLight.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/KelsonSansLight/KelsonSansLight.woff") format("woff"),
+    url("../fonts/KelsonSansLight/KelsonSansLight.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/* font-family: "KelsonSansBold"; */
+@font-face {
+    font-family: "KelsonSansBold";
+    src: url("../fonts/KelsonSansBold/KelsonSansBold.eot");
+    src: url("../fonts/KelsonSansBold/KelsonSansBold.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/KelsonSansBold/KelsonSansBold.woff") format("woff"),
+    url("../fonts/KelsonSansBold/KelsonSansBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
 /* == HEADER STYLES == */
 
 .header {
     height: 50px;
     overflow: hidden;
     background-color: #ffffff;
+    width: 100%;
 }
 
 .header img {
@@ -51,6 +83,15 @@ body {
     line-height: 35px;
     display: block;
     float:left;
+}
+
+.header-buttons-wrap {
+    width: 50px;
+    float: left;
+}
+.header-buttons {
+    height: 50px;
+
 }
 
 /* == HEADER STYLES ENDS */
@@ -92,20 +133,55 @@ body {
     clear: both;
 }
 
+
 .hoverable {
     display: inline-block;
+    position: relative;
+    clear: both;
+}
+
+.hoverable img {
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .hoverable .hover {
-    display: none;
+    opacity: 0;
 }
 .hoverable:hover .hover {
-    display: inline-block;
+    opacity: 100;
 }
 
 .hoverable:hover .hover-none {
-    display: none;
+    opacity: 0;
 }
+
+
+.hoverable .hover, .hoverable .hover-none {
+    -webkit-transition: opacity 500ms ease-in-out;
+    -moz-transition: opacity 500ms ease-in-out;
+    -o-transition: opacity 500ms ease-in-out;
+    transition: opacity 500ms ease-in-out;
+    position: absolute;
+}
+
+/*.hoverable {*/
+    /*display: inline-block;*/
+
+/*}*/
+
+/*.hoverable .hover {*/
+    /*display: none;*/
+/*}*/
+/*.hoverable:hover .hover {*/
+    /*display: inline-block;*/
+/*}*/
+
+/*.hoverable:hover .hover-none {*/
+    /*display: none;*/
+/*}*/
 
 .relative-wrap {
 
@@ -170,14 +246,14 @@ body {
 .error-wrapper {
     padding-left: 5px;
     padding-right: 5px;
-    margin: 25px;
-    margin-top: 0px;
+    margin: 25px auto;
+    width: 490px;
 }
 
 .alert-error {
     background-color: #f2dede;
     border-color: #eed3d7;
-    color: #b94a48;
+    color: red;
     text-align: left;
 
 }
@@ -204,3 +280,5 @@ body {
 }
 
 /* == DEVISE ALERTS ENDS */
+
+

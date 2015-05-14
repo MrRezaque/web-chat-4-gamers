@@ -19,14 +19,16 @@ class User < ActiveRecord::Base
       :case_sensitive => false
     },
     :format => {
-      with: /\A[^`!@#\$%\^&*+_=]+\z/
+      with: /\A[^`!@#\$%\^&*+_=,]+\z/
     },
     :length => {
         minimum: 3,
         maximum: 18
     }
 
-  
+  before_create do
+    self.auth_token = ApplicationHelper.get_token
+  end
 
 
 

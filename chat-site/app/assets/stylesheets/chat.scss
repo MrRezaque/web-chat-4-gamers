@@ -87,19 +87,59 @@
   overflow: hidden;
   background: url('room_select/form.png');
   background-size: 980px 500px;
-  background-color: #080808;
+  background-color: white;
 }
 
 .room-thumb {
   float: left;
   overflow: hidden;
+  width: 330px;
+  height: 300px;
+  position: relative;
+}
+
+.room-thumb a {
+  width: 100%;
+  height: inherit;
 }
 
 .room-thumb img {
+//  width: 330px;
+  height: 430px;
   width: 330px;
-  height: 330px;
+
 }
 
 .room-palceholder {
   height: 100px;
+}
+
+
+.session-alert {
+  background-color: #ffffff;
+  height: 30px;
+  width: 590px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  color: red;
+  text-align: center;
+  padding: 5px;
+  font-size: 18px;
+  margin-bottom: -50px;
+
+  $link-color: red;
+
+  a {
+    color: $link-color;
+  }
+  a:visited {
+    color: $link-color;
+  }
+  a:hover {
+    color: $link-color;
+  }
+  a:active {
+    color: $link-color;
+  }
 }

@@ -1,15 +1,39 @@
+<% unless current_user %>
+    <%= render "chat/session_alert" %>
+<% end %>
 
 <div class="pages">
+
     <div class="chatArea">
-        <ul class="messages"></ul>
+      <div class="room-msg-wrap">
+        <div class="room-msg">
+          <span class="room-msg-span"></span>
+        </div>
+        <div class="room-online-wrap">
+          <span>Онлайн: </span>
+          <span class="online-cnt">x</span>
+        </div>
+      </div>
+      <ul class="messages"></ul>
     </div>
-    <input class="inputMessage" placeholder="Введите сообщение..."/>
-    <% if current_user %>
+    <div>
+      <% if current_user %>
+          <input class="inputMessage" placeholder="Введите сообщение..."/>
+      <% else %>
+          <input class="inputMessage" disabled="disabled" placeholder="Зарегистрируйте или войдите, чтобы принять участие в беседе"/>
+      <% end %>
+      <button class="inputMessageBtn">Отправить</button>
+    </div>
+
         <script>
-            currentUser = '<%= current_user.username %>';
-            console.log(currentUser);
-            init( '<%= endpoint %>' ,'<%= current_user.auth_token %>')
+            var authToken;
+            <% if current_user %>
+                var currentUser = '<%= current_user.username %>';
+                console.log(currentUser);
+                authToken = '<%= current_user.auth_token %>';
+            <% end %>
+            init( '<%= endpoint %>' , authToken)
         </script>
-    <% end %>
+
 </div>
 

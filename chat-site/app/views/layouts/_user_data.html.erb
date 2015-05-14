@@ -1,6 +1,25 @@
-<span class="username-wrap"><%= current_user.username %></span>
-<%= link_to 'Редактировать учетные данные', edit_user_registration_path, class: '-btn -primary-' %>
-<%= link_to 'Выйти', destroy_user_session_path, :method => :delete , class: '-btn -danger-' %>
+<!--<span class="username-wrap"><%= current_user.username %></span>-->
+
+<div class="header-buttons-wrap">
+  <%= link_to  'http://vk.com/write5632934', title: 'Обратная связь',  class: 'hoverable header-buttons' do %>
+      <%= image_tag 'head/call.png', class: 'hover-none' %>
+      <%= image_tag 'head/call-hover.png', class: 'hover' %>
+  <% end %>
+</div>
+<div class="header-buttons-wrap">
+  <%= link_to  edit_user_registration_path, title: 'Настройки профиля', class: 'hoverable header-buttons' do %>
+      <%= image_tag 'head/profile.png', class: 'hover-none' %>
+      <%= image_tag 'head/profile-hover.png', class: 'hover' %>
+  <% end %>
+</div>
+<div class="header-buttons-wrap">
+  <%= link_to destroy_user_session_path, :method => :delete, title: 'Выход', class: 'hoverable header-buttons' do %>
+      <%= image_tag 'head/log.png', class: 'hover-none' %>
+      <%= image_tag 'head/log-hover.png', class: 'hover' %>
+  <% end %>
+</div>
+
+
 
 
 

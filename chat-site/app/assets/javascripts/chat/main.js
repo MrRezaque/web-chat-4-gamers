@@ -14,27 +14,29 @@
   //var GREET_MSG = "Добро пожаловать";
   var LOGIN_FAILURE = "Не удается авторизоваться в чате.";
   var RECONNECT_MSG = "Переподключились";
-  var BAN_INFO = "Вам запрещенно отправлять сообщение еще";
+  var BAN_INFO = "Вам запрещенно отправлять сообщения еще";
   var SECONDS = "секунд(ы)";
   var JUST_BANNED = "Вас забанили на";
 
   var authed = false;
+  $$chat = {};
 
   function init(endpoint, token) {
 
     var socket = io(endpoint);
     start(socket, token);
-
   }
 
   function start(socket, token) {
+
+    $$chat.socket = socket;
 
     // Initialize varibles
     var $window = $(window);
     var $usernameInput = $('.usernameInput'); // Input for username
     var $messages = $('.messages'); // Messages area
     var $inputMessage = $('.inputMessage'); // Input message input box
-
+    $inputMessage.focus();
    /* var $loginPage = $('.login.page'); // The login page
     var $chatPage = $('.chat.page'); // The chatroom page*/
 
@@ -42,8 +44,8 @@
     var username;
     var connected = false;
     var typing = false;
-    var lastTypingTime;
-    var $currentInput = $usernameInput.focus();
+    //var lastTypingTime;
+
 
     // Sets the client's username
     function setUsername (name) {
@@ -53,8 +55,6 @@
     function auth(authToken) {
       socket.emit('auth', authToken);
     }
-
-
 
     //function greetUser () {
     //
@@ -114,32 +114,44 @@
         $typingMessages.remove();
       }
       var message = data.message || '';
-      var pattern ="^" + data.username + ",";
+      var pattern ="^" + username + ",";
       var regExp = new RegExp(pattern);
 
+      //console.log(regExp);
+      //console.log(message);
+      //console.log(pattern);
+      console.log('regexp:');
       console.log(regExp);
+      console.log('message:');
       console.log(message);
-      console.log(pattern);
+      console.log('username: ');
+      console.log(data.username);
 
-      var highlightClass = "";
 
       if ( regExp.test( message ) ) {
-        highlightClass = "message-highlight";
+        var msgStart = message.split(',')[0].length
+        message ='<span class="message-highlight">'+username+'</span>,' + message.slice(msgStart+1);
       }
 
+      var color = getUsernameColor(data.username);
+      var timeBreakets = [ "[", "]" ];
+      var currentTime = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+      var $currentTimeSpan = $('<span class="username-timestamp"/>')
+        .text(timeBreakets.join(currentTime))
+        .css('color', color);
 
       var $usernameDiv = $('<span class="username"/>')
         .text(data.username)
-        .css('color', getUsernameColor(data.username));
+        .css('color', color);
+
       var $messageBodyDiv = $('<span class="messageBody">')
-        .addClass(highlightClass)
-        .text(data.message);
+        .append(message);
 
       var typingClass = data.typing ? 'typing' : '';
       var $messageDiv = $('<li class="message"/>')
         .data('username', data.username)
         .addClass(typingClass)
-        .append($usernameDiv, $messageBodyDiv);
+        .append($currentTimeSpan, $usernameDiv, $messageBodyDiv);
 
       addMessageElement($messageDiv, options);
     }
@@ -231,6 +243,8 @@
     // Gets the color of a username through our hash function
     function getUsernameColor (username) {
       // Compute hash code
+
+      return "red";
       var hash = 7;
       for (var i = 0; i < username.length; i++) {
         hash = username.charCodeAt(i) + (hash << 5) - hash;
@@ -245,11 +259,13 @@
     $window.keydown(function (event) {
       // Auto-focus the current input when a key is typed
       if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-        $currentInput.focus();
+        $inputMessage.focus();
       }
       // When the client hits ENTER on their keyboard
+
       if (event.which === 13) {
-        console.log(username);
+        console.log('keydown event');
+        console.log('username: '+ username);
         if (username) {
           sendMessage();
           socket.emit('stop typing');
@@ -257,6 +273,26 @@
         }
       }
     });
+
+    $('.inputMessageBtn').on('click', function() {
+      if (username) {
+        sendMessage();
+        socket.emit('stop typing');
+        typing = false;
+      }
+      $inputMessage.focus();
+    });
+
+    // update status methods
+
+    function setOnline(count) {
+      console.log('user cnt:' + count);
+      $('.online-cnt').text(count);
+    }
+
+    function setGreetMsg(msg) {
+      $('.room-msg-span').text(msg);
+    }
 
     //$inputMessage.on('input', function() {
     //  //updateTyping();
@@ -276,11 +312,9 @@
 
     $(document).on('click', '.username', function(e) {
       console.log('click on login');
-      $inputMessage.focus();
+
       var clickedUsername = e.currentTarget.innerText;
-      var curInpVal = $inputMessage.val() || '';
-      var newValue = clickedUsername + ", " + curInpVal;
-      $inputMessage.val(newValue);
+      $$chat.addressMessage(clickedUsername);
     });
 
 
@@ -288,7 +322,9 @@
 
     socket.on('connect', function() {
       console.log('connect happened');
-      auth(token);
+      if (token != null){
+        auth(token);
+      }
     });
 
     socket.on('reconnect', function() {
@@ -347,16 +383,22 @@
     });
 
     //// Whenever the server emits 'user joined', log it in the chat body
-    //socket.on('user joined', function (data) {
-    //  //log(data.username + ' joined');
-    //});
+    socket.on('user joined', function (data) {
+      //log(data.username + ' joined');
+      setOnline(data.numUsers);
+    });
     //
     //// Whenever the server emits 'user left', log it in the chat body
-    //socket.on('user left', function (data) {
-    //  //log(data.username + ' left');
-    //  //addParticipantsMessage(data);
-    //  //removeChatTyping(data);
-    //});
+    socket.on('user left', function (data) {
+      //log(data.username + ' left');
+      //addParticipantsMessage(data);
+      //removeChatTyping(data);
+      setOnline(data.numUsers);
+    });
+    socket.on('set room data', function (data) {
+      setOnline(data.numUsers);
+      setGreetMsg(data.roomMsg);
+    });
     //
     //// Whenever the server emits 'typing', show the typing message
     //socket.on('typing', function (data) {
@@ -379,5 +421,14 @@
     //function reconnect() {
     //  start(socket, token);
     //}
+    $$chat.addressMessage = function(username) {
+      $inputMessage.focus();
+      var curInpVal = $inputMessage.val() || '';
+      var newValue = username + ", " + curInpVal;
+      $inputMessage.val(newValue);
+    };
+    $$chat.claimUser = function(username) {
+      socket.emit('complaint', username);
+    }
   }
 
