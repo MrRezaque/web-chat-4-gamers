@@ -300,7 +300,7 @@
     $(document).on('click', '.username', function(e) {
       console.log('click on login');
 
-      var clickedUsername = e.currentTarget.innerText;
+      var clickedUsername =  e.currentTarget.textContent || e.currentTarget.innerText;
       $$chat.addressMessage(clickedUsername);
     });
 
